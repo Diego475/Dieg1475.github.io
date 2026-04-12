@@ -1,93 +1,386 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-    <style>
-        fieldset {
-            background-color: rgba(12, 12, 12, 0.281); margin: auto;width: 70%;
-        display: block;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-        legend{font-size: 20px;
-        color: rgb(0, 0, 0);}
-h1{text-align: center;}
-button{margin-left: 50%;color: rgba(12, 11, 12, 0.975); background-color: rgba(141, 208, 208, 0.685);
-border-radius: 10%;}
-div{width: 50%;
-background-color:rgba(204, 174, 110, 0.521);
-display: block;
-margin: auto;
-position: center;
-margin-top: 3%;
-border-radius: 15%;}
-.campo { background-color: burlywood;}
-.registro {
-    margin-top: 15% !important;
-border-radius: 15%;}
-body {background-color: rgba(207, 166, 78, 0.637)}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0546a7, #04529b);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
 
-.sexo {background-color:burlywood ;
-        height: 80px;}
-.contacto {background-color: burlywood;}
-.imgfondo{position: absolute;object-fit: fill;width: 80%;margin-left: 10%;}
+    .reg-box {
+      width: 360px;
+      padding: 35px 30px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 15px;
+      text-align: center;
+      color: white;
+      box-shadow:
+        0 80px 80px rgba(7, 5, 5, 0.2),
+        0 0 40px rgba(77, 163, 255, 0.6),
+        0 0 20px rgba(77, 163, 255, 0.3);
+    }
 
+    .reg-box h2 {
+      margin: 0 0 6px;
+      font-size: 22px;
+    }
 
+    .reg-subtitle {
+      font-size: 13px;
+      color: #c8dcf5;
+      margin: 0 0 22px;
+    }
 
+    .avatar-preview {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(77, 163, 255, 0.35);
+      border: 2px solid rgba(77, 163, 255, 0.6);
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: white;
+    }
 
+    .input-group {
+      position: relative;
+      margin: 10px 0;
+      text-align: left;
+    }
 
+    .input-group label {
+      display: block;
+      font-size: 11px;
+      color: #c8dcf5;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
 
-</style>
+    .input-group input {
+      width: 100%;
+      padding: 10px 12px 10px 36px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s, background 0.2s;
+    }
+
+    .input-group input::placeholder {
+      color: #d0e4f7;
+    }
+
+    .input-group input:focus {
+      border-color: rgba(77, 163, 255, 0.8);
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .row-2 {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row-2 .input-group {
+      flex: 1;
+    }
+
+    .strength-bar {
+      height: 4px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.15);
+      margin-top: 6px;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 4px;
+      transition: width 0.3s, background 0.3s;
+    }
+
+    .strength-label {
+      font-size: 11px;
+      text-align: right;
+      margin-top: 3px;
+      min-height: 14px;
+    }
+
+    .terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      margin: 14px 0 4px;
+      text-align: left;
+      color: #dcecff;
+    }
+
+    .terms input[type="checkbox"] {
+      margin-top: 2px;
+      accent-color: #4da3ff;
+      flex-shrink: 0;
+    }
+
+    .terms a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .reg-btn {
+      width: 100%;
+      padding: 11px;
+      margin-top: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #4da3ff;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .reg-btn:hover { background: #83b9ee; }
+    .reg-btn:active { transform: scale(0.98); }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 18px 0 14px;
+      color: #c8dcf5;
+      font-size: 12px;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .login-link {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #dcecff;
+    }
+
+    .login-link a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .mensaje-error {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #ff6b6b;
+      min-height: 18px;
+    }
+
+    .mensaje-ok {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #97c459;
+      min-height: 18px;
+    }
+  </style>
 </head>
+<body>
 
-<body><div>
-    <br>
-    <h1>Crear Cuenta </h1> 
-    <fieldset class="campo">
-        <legend class="registro">Datos</legend>
-        <br>
-    Nombre <input type="text">
-    <br><br>
-    Apellido <input type="text">
-    <br><br>
-    Dirección <input type="text">
-    <br><br>
-    Fecha de Nacimiento  <input type="date">
-    <br><br>
-    <textarea rows="3" cols="50" name="texto" placeholder="Información Adicional"></textarea>
-    </fieldset>
-    <br>
-    <fieldset class="contacto">
-<legend>Contacto</legend>
-<br>
-Teléfono <input type="number">
-<br><br>
-Correo Electrónico <input type="email">
-    </fieldset>
-    
-    
-    <br>
-    <fieldset class="sexo"> 
-        <legend >Sexo</legend>
-        <br>
-        <input type="radio" name="sexo" value="Hombre">Hombre
-        <input type="radio" name="sexo" value="Mujer">Mujer
-        <input type="radio" name="sexo" value="Otro">Otro
+  <div class="reg-box">
+    <div class="avatar-preview" id="avatar">?</div>
+    <h2>Crear cuenta</h2>
+    <p class="reg-subtitle">Únete en segundos, sin complicaciones</p>
 
+    <div class="row-2">
+      <div class="input-group">
+        <label>Nombre</label>
+        <span class="input-icon">👤</span>
+        <input type="text" id="firstName" placeholder="Ana" oninput="updateAvatar()">
+      </div>
+      <div class="input-group">
+        <label>Apellido</label>
+        <span class="input-icon">👤</span>
+        <input type="text" id="lastName" placeholder="García" oninput="updateAvatar()">
+      </div>
+    </div>
 
+    <div class="input-group">
+      <label>Correo electrónico</label>
+      <span class="input-icon">✉️</span>
+      <input type="text" id="email" placeholder="ana@ejemplo.com">
+    </div>
 
+    <div class="input-group">
+      <label>Nombre de usuario</label>
+      <span class="input-icon">🔖</span>
+      <input type="text" id="username" placeholder="ana_garcia">
+    </div>
 
-    
-    </fieldset>
-    <br>
-    <a href="Mi pagina.html"></a><button>Enviar Registro</button>
-    
-    
-</div>
+    <div class="input-group">
+      <label>Contraseña</label>
+      <span class="input-icon">🔒</span>
+      <input type="password" id="pwd" placeholder="Mínimo 8 caracteres" oninput="checkStrength(this.value)">
+      <div class="strength-bar"><div class="strength-fill" id="sfill"></div></div>
+      <div class="strength-label" id="slabel"></div>
+    </div>
 
-<img src="/Img/sevillafondo.png" alt="Sevilla Fondo" class="imgfondo">
-<img src="/Img/Infotecsinfondo.png" alt="sinfondo" class="infocsinfondo">
+    <div class="input-group">
+      <label>Confirmar contraseña</label>
+      <span class="input-icon">🔒</span>
+      <input type="password" id="pwd2" placeholder="Repite tu contraseña">
+    </div>
 
+    <div class="terms">
+      <input type="checkbox" id="terms">
+      <label for="terms">Acepto los <a href="#">Términos de servicio</a> y la <a href="#">Política de privacidad</a></label>
+    </div>
+
+    <button class="reg-btn" onclick="registrar()">Crear cuenta</button>
+
+    <p class="mensaje-error" id="error"></p>
+    <p class="mensaje-ok" id="ok"></p>
+
+    <p class="login-link">¿Ya tienes cuenta? <a href="inicio de sesion.html">Inicia sesión</a></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAgbY0cBQbXA04FZ9kw53-KSv9B3uZ_XC8",
+      authDomain: "infotec-16591.firebaseapp.com",
+      projectId: "infotec-16591",
+      storageBucket: "infotec-16591.firebasestorage.app",
+      messagingSenderId: "894458763283",
+      appId: "1:894458763283:web:055ea2a5c97af5ce62c7e6",
+      measurementId: "G-BX2DBQM1EG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.registrar = async function () {
+      const nombre = document.getElementById('firstName').value.trim();
+      const apellido = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const pwd = document.getElementById('pwd').value;
+      const pwd2 = document.getElementById('pwd2').value;
+      const terms = document.getElementById('terms').checked;
+      const errorEl = document.getElementById('error');
+      const okEl = document.getElementById('ok');
+      errorEl.textContent = '';
+      okEl.textContent = '';
+
+      if (!nombre || !apellido || !email || !username || !pwd || !pwd2) {
+        errorEl.textContent = 'Por favor rellena todos los campos.'; return;
+      }
+      if (pwd !== pwd2) {
+        errorEl.textContent = 'Las contraseñas no coinciden.'; return;
+      }
+      if (pwd.length < 8) {
+        errorEl.textContent = 'La contraseña debe tener al menos 8 caracteres.'; return;
+      }
+      if (!terms) {
+        errorEl.textContent = 'Debes aceptar los términos y condiciones.'; return;
+      }
+
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, pwd);
+
+        await updateProfile(cred.user, { displayName: `${nombre} ${apellido}` });
+
+        await setDoc(doc(db, "usuarios", cred.user.uid), {
+          nombre,
+          apellido,
+          username,
+          email,
+          fechaRegistro: new Date().toISOString()
+        });
+
+        okEl.textContent = '¡Cuenta creada correctamente! Redirigiendo...';
+        setTimeout(() => { window.location.href = 'inicio de sesion.html'; }, 1500);
+
+      } catch (err) {
+        if (err.code === 'auth/email-already-in-use') {
+          errorEl.textContent = 'Este correo ya está registrado.';
+        } else if (err.code === 'auth/invalid-email') {
+          errorEl.textContent = 'El correo no tiene un formato válido.';
+        } else if (err.code === 'auth/weak-password') {
+          errorEl.textContent = 'La contraseña es demasiado débil.';
+        } else {
+          errorEl.textContent = 'Error al crear la cuenta. Inténtalo de nuevo.';
+        }
+      }
+    };
+
+    window.updateAvatar = function () {
+      const f = document.getElementById('firstName').value.trim();
+      const l = document.getElementById('lastName').value.trim();
+      const av = document.getElementById('avatar');
+      av.textContent = (f ? f[0].toUpperCase() : '') + (l ? l[0].toUpperCase() : '') || '?';
+    };
+
+    window.checkStrength = function (val) {
+      const fill = document.getElementById('sfill');
+      const label = document.getElementById('slabel');
+      if (!val) { fill.style.width = '0%'; label.textContent = ''; return; }
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+      const levels = [
+        { w: '20%', bg: '#e24b4a', text: 'Muy débil' },
+        { w: '40%', bg: '#ef9f27', text: 'Débil' },
+        { w: '65%', bg: '#FAC775', text: 'Regular' },
+        { w: '85%', bg: '#97c459', text: 'Fuerte' },
+        { w: '100%', bg: '#1D9E75', text: 'Muy fuerte' },
+      ];
+      const lv = levels[Math.min(score, 4)];
+      fill.style.width = lv.w;
+      fill.style.background = lv.bg;
+      label.textContent = lv.text;
+      label.style.color = lv.bg;
+    };
+  </script>
 
 </body>
 </html>
