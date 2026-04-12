@@ -78,7 +78,7 @@
 
     .input-group input {
       width: 100%;
-      padding: 10px 12px 10px 36px;
+      padding: 10px 12px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.2);
@@ -95,14 +95,6 @@
     .input-group input:focus {
       border-color: rgba(77, 163, 255, 0.8);
       background: rgba(255, 255, 255, 0.28);
-    }
-
-    .input-icon {
-      position: absolute;
-      left: 10px;
-      bottom: 10px;
-      font-size: 14px;
-      pointer-events: none;
     }
 
     .row-2 {
@@ -136,28 +128,6 @@
       min-height: 14px;
     }
 
-    .terms {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 12px;
-      margin: 14px 0 4px;
-      text-align: left;
-      color: #dcecff;
-    }
-
-    .terms input[type="checkbox"] {
-      margin-top: 2px;
-      accent-color: #4da3ff;
-      flex-shrink: 0;
-    }
-
-    .terms a {
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
     .reg-btn {
       width: 100%;
       padding: 11px;
@@ -174,22 +144,6 @@
 
     .reg-btn:hover { background: #83b9ee; }
     .reg-btn:active { transform: scale(0.98); }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 18px 0 14px;
-      color: #c8dcf5;
-      font-size: 12px;
-    }
-
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.25);
-    }
 
     .login-link {
       margin-top: 20px;
@@ -228,31 +182,26 @@
     <div class="row-2">
       <div class="input-group">
         <label>Nombre</label>
-        
         <input type="text" id="firstName" placeholder="Nombre" oninput="updateAvatar()">
       </div>
       <div class="input-group">
         <label>Apellido</label>
-       
         <input type="text" id="lastName" placeholder="Apellido" oninput="updateAvatar()">
       </div>
     </div>
 
     <div class="input-group">
       <label>Correo electrónico</label>
-   
       <input type="text" id="email" placeholder="Correo Electronico">
     </div>
 
     <div class="input-group">
       <label>Nombre de usuario</label>
-      
       <input type="text" id="username" placeholder="USUARIO">
     </div>
 
     <div class="input-group">
       <label>Contraseña</label>
-     
       <input type="password" id="pwd" placeholder="Mínimo 8 caracteres" oninput="checkStrength(this.value)">
       <div class="strength-bar"><div class="strength-fill" id="sfill"></div></div>
       <div class="strength-label" id="slabel"></div>
@@ -260,13 +209,10 @@
 
     <div class="input-group">
       <label>Confirmar contraseña</label>
-      
       <input type="password" id="pwd2" placeholder="Repite tu contraseña">
     </div>
 
-    
-
-    <button class="reg-btn" onclick="registrar()">Crear cuenta</button>
+    <button class="reg-btn" id="btnRegistrar">Crear cuenta</button>
 
     <p class="mensaje-error" id="error"></p>
     <p class="mensaje-ok" id="ok"></p>
@@ -274,11 +220,11 @@
     <p class="login-link">¿Ya tienes cuenta? <a href="inicio de sesion.html">Inicia sesión</a></p>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAgbY0cBQbXA04FZ9kw53-KSv9B3uZ_XC8",
       authDomain: "infotec-16591.firebaseapp.com",
@@ -289,18 +235,17 @@
       measurementId: "G-BX2DBQM1EG"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-    window.registrar = async function () {
+    document.getElementById('btnRegistrar').addEventListener('click', async function () {
       const nombre = document.getElementById('firstName').value.trim();
       const apellido = document.getElementById('lastName').value.trim();
       const email = document.getElementById('email').value.trim();
       const username = document.getElementById('username').value.trim();
       const pwd = document.getElementById('pwd').value;
       const pwd2 = document.getElementById('pwd2').value;
-      const terms = document.getElementById('terms').checked;
       const errorEl = document.getElementById('error');
       const okEl = document.getElementById('ok');
       errorEl.textContent = '';
@@ -315,16 +260,11 @@
       if (pwd.length < 8) {
         errorEl.textContent = 'La contraseña debe tener al menos 8 caracteres.'; return;
       }
-      if (!terms) {
-        errorEl.textContent = 'Debes aceptar los términos y condiciones.'; return;
-      }
 
       try {
-        const cred = await createUserWithEmailAndPassword(auth, email, pwd);
-
-        await updateProfile(cred.user, { displayName: `${nombre} ${apellido}` });
-
-        await setDoc(doc(db, "usuarios", cred.user.uid), {
+        const cred = await auth.createUserWithEmailAndPassword(email, pwd);
+        await cred.user.updateProfile({ displayName: `${nombre} ${apellido}` });
+        await db.collection('usuarios').doc(cred.user.uid).set({
           nombre,
           apellido,
           username,
@@ -346,16 +286,16 @@
           errorEl.textContent = 'Error al crear la cuenta. Inténtalo de nuevo.';
         }
       }
-    };
+    });
 
-    window.updateAvatar = function () {
+    function updateAvatar() {
       const f = document.getElementById('firstName').value.trim();
       const l = document.getElementById('lastName').value.trim();
       const av = document.getElementById('avatar');
       av.textContent = (f ? f[0].toUpperCase() : '') + (l ? l[0].toUpperCase() : '') || '?';
-    };
+    }
 
-    window.checkStrength = function (val) {
+    function checkStrength(val) {
       const fill = document.getElementById('sfill');
       const label = document.getElementById('slabel');
       if (!val) { fill.style.width = '0%'; label.textContent = ''; return; }
@@ -376,10 +316,9 @@
       fill.style.background = lv.bg;
       label.textContent = lv.text;
       label.style.color = lv.bg;
-    };
+    }
   </script>
 
 </body>
 </html>
-
 
