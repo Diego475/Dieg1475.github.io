@@ -228,31 +228,31 @@
     <div class="row-2">
       <div class="input-group">
         <label>Nombre</label>
-        <span class="input-icon">👤</span>
+        
         <input type="text" id="firstName" placeholder="Ana" oninput="updateAvatar()">
       </div>
       <div class="input-group">
         <label>Apellido</label>
-        <span class="input-icon">👤</span>
+       
         <input type="text" id="lastName" placeholder="García" oninput="updateAvatar()">
       </div>
     </div>
 
     <div class="input-group">
       <label>Correo electrónico</label>
-      <span class="input-icon">✉️</span>
+   
       <input type="text" id="email" placeholder="ana@ejemplo.com">
     </div>
 
     <div class="input-group">
       <label>Nombre de usuario</label>
-      <span class="input-icon">🔖</span>
+      
       <input type="text" id="username" placeholder="ana_garcia">
     </div>
 
     <div class="input-group">
       <label>Contraseña</label>
-      <span class="input-icon">🔒</span>
+     
       <input type="password" id="pwd" placeholder="Mínimo 8 caracteres" oninput="checkStrength(this.value)">
       <div class="strength-bar"><div class="strength-fill" id="sfill"></div></div>
       <div class="strength-label" id="slabel"></div>
@@ -260,14 +260,11 @@
 
     <div class="input-group">
       <label>Confirmar contraseña</label>
-      <span class="input-icon">🔒</span>
+      
       <input type="password" id="pwd2" placeholder="Repite tu contraseña">
     </div>
 
-    <div class="terms">
-      <input type="checkbox" id="terms">
-      <label for="terms">Acepto los <a href="#">Términos de servicio</a> y la <a href="#">Política de privacidad</a></label>
-    </div>
+    
 
     <button class="reg-btn" onclick="registrar()">Crear cuenta</button>
 
