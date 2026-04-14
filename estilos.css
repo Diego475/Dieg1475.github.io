@@ -195,79 +195,63 @@ body {
     box-shadow: 0 0 40px rgb(4, 0, 253)}
 
     @media (max-width: 768px) {
- 
     .titulo {
         width: 80%;
         margin: 20px auto;
-        font-size: 14px;
-    }
- 
+        font-size: 14px;}
     .tittex {
-        font-size: 26px;
-    }
- 
+        font-size: 26px;}
     .header {
         flex-direction: column;
         align-items: center;
         gap: 15px;
         padding: 10px 20px;
-        margin-top: 0;
-    }
- 
+        margin-top: 0;}
     .Informacion {
         position: static !important;
         top: 0 !important;
         left: 0 !important;
         width: 75%;
         text-align: center;
-        display: block;
-    }
- 
+        display: block;}
     .iniciarsesion {
         position: static !important;
         top: 0 !important;
         right: 0 !important;
         width: 75%;
         text-align: center;
-        display: block;
-    }
- 
+        display: block;}
     .reloj {
         width: 85%;
         height: auto;
         margin: 20px auto;
-        display: block;
-    }
- 
+        display: block;}
     .sidebar {
-        left: -230px;
-    }
-}
+        left: -230px;}}
 @media (max-width: 390px) {
- 
     .titulo {
         width: 88%;
         margin: 15px auto;
-        font-size: 12px;
-    }
- 
+        font-size: 12px;}
     .tittex {
-        font-size: 20px;
-    }
- 
+        font-size: 20px;}
     .Informacion,
     .iniciarsesion {
         width: 88%;
         font-size: 15px;
-        padding: 10px 12px;
-    }
- 
+        padding: 10px 12px;}
     .reloj {
-        width: 92%;
-    }
- 
+        width: 60%;}
     .sidebar {
         width: 220px;
-        left: -210px;
-    }
-}
+        left: -210px;}}
+    .banda {width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.4s ease;
+    cursor: pointer;
+    margin-top: 50px;
+    margin-left: 125px;}
+    .banda:hover { transform: scale(1.1);
+    box-shadow: 0 0 40px rgb(4, 0, 253)}
