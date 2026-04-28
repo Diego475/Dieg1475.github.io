@@ -7,8 +7,7 @@
   <style>
     * {
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+      font-family: Arial, sans-serif;}
 
     body {
       margin: 0;
@@ -17,8 +16,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem 1rem;
-    }
+      padding: 2rem 1rem;}
 
     .reg-box {
       width: 360px;
@@ -32,19 +30,16 @@
       box-shadow:
         0 80px 80px rgba(7, 5, 5, 0.2),
         0 0 40px rgba(77, 163, 255, 0.6),
-        0 0 20px rgba(77, 163, 255, 0.3);
-    }
+        0 0 20px rgba(77, 163, 255, 0.3);}
 
     .reg-box h2 {
       margin: 0 0 6px;
-      font-size: 22px;
-    }
+      font-size: 22px;}
 
     .reg-subtitle {
       font-size: 13px;
       color: #c8dcf5;
-      margin: 0 0 22px;
-    }
+      margin: 0 0 22px;}
 
     .avatar-preview {
       width: 56px;
@@ -58,14 +53,12 @@
       justify-content: center;
       font-size: 22px;
       font-weight: bold;
-      color: white;
-    }
+      color: white;}
 
     .input-group {
       position: relative;
       margin: 10px 0;
-      text-align: left;
-    }
+      text-align: left;}
 
     .input-group label {
       display: block;
@@ -73,8 +66,7 @@
       color: #c8dcf5;
       margin-bottom: 4px;
       letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
+      text-transform: uppercase;}
 
     .input-group input {
       width: 100%;
@@ -85,48 +77,40 @@
       color: white;
       font-size: 14px;
       outline: none;
-      transition: border 0.2s, background 0.2s;
-    }
+      transition: border 0.2s, background 0.2s;}
 
     .input-group input::placeholder {
-      color: #d0e4f7;
-    }
+      color: #d0e4f7;}
 
     .input-group input:focus {
       border-color: rgba(77, 163, 255, 0.8);
-      background: rgba(255, 255, 255, 0.28);
-    }
+      background: rgba(255, 255, 255, 0.28);}
 
     .row-2 {
       display: flex;
-      gap: 10px;
-    }
+      gap: 10px;}
 
     .row-2 .input-group {
-      flex: 1;
-    }
+      flex: 1;}
 
     .strength-bar {
       height: 4px;
       border-radius: 4px;
       background: rgba(255, 255, 255, 0.15);
       margin-top: 6px;
-      overflow: hidden;
-    }
+      overflow: hidden;}
 
     .strength-fill {
       height: 100%;
       width: 0%;
       border-radius: 4px;
-      transition: width 0.3s, background 0.3s;
-    }
+      transition: width 0.3s, background 0.3s;}
 
     .strength-label {
       font-size: 11px;
       text-align: right;
       margin-top: 3px;
-      min-height: 14px;
-    }
+      min-height: 14px;}
 
     .reg-btn {
       width: 100%;
@@ -139,8 +123,7 @@
       font-weight: bold;
       font-size: 15px;
       cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-    }
+      transition: background 0.2s, transform 0.1s;}
 
     .reg-btn:hover { background: #83b9ee; }
     .reg-btn:active { transform: scale(0.98); }
@@ -148,28 +131,24 @@
     .login-link {
       margin-top: 20px;
       font-size: 13px;
-      color: #dcecff;
-    }
+      color: #dcecff;}
 
     .login-link a {
       color: white;
       font-weight: bold;
-      text-decoration: none;
-    }
+      text-decoration: none;}
 
     .mensaje-error {
       margin-top: 10px;
       font-size: 13px;
       color: #ff6b6b;
-      min-height: 18px;
-    }
+      min-height: 18px;}
 
     .mensaje-ok {
       margin-top: 10px;
       font-size: 13px;
       color: #97c459;
-      min-height: 18px;
-    }
+      min-height: 18px;}
   </style>
 </head>
 <body>
@@ -232,8 +211,7 @@
       storageBucket: "infotec-16591.firebasestorage.app",
       messagingSenderId: "894458763283",
       appId: "1:894458763283:web:055ea2a5c97af5ce62c7e6",
-      measurementId: "G-BX2DBQM1EG"
-    };
+      measurementId: "G-BX2DBQM1EG"};
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
@@ -252,14 +230,11 @@
       okEl.textContent = '';
 
       if (!nombre || !apellido || !email || !username || !pwd || !pwd2) {
-        errorEl.textContent = 'Por favor rellena todos los campos.'; return;
-      }
+        errorEl.textContent = 'Por favor rellena todos los campos.'; return;}
       if (pwd !== pwd2) {
-        errorEl.textContent = 'Las contraseñas no coinciden.'; return;
-      }
+        errorEl.textContent = 'Las contraseñas no coinciden.'; return;}
       if (pwd.length < 8) {
-        errorEl.textContent = 'La contraseña debe tener al menos 8 caracteres.'; return;
-      }
+        errorEl.textContent = 'La contraseña debe tener al menos 8 caracteres.'; return;}
 
       try {
         const cred = await auth.createUserWithEmailAndPassword(email, pwd);
@@ -269,31 +244,24 @@
           apellido,
           username,
           email,
-          fechaRegistro: new Date().toISOString()
-        });
+          fechaRegistro: new Date().toISOString()});
 
         okEl.textContent = '¡Cuenta creada correctamente! Redirigiendo...';
-        setTimeout(() => { window.location.href = 'inicio de sesion.html'; }, 1500);
-
-      } catch (err) {
+        setTimeout(() => { window.location.href = 'inicio de sesion.html'; }, 1500);}
+        catch (err) {
         if (err.code === 'auth/email-already-in-use') {
-          errorEl.textContent = 'Este correo ya está registrado.';
-        } else if (err.code === 'auth/invalid-email') {
-          errorEl.textContent = 'El correo no tiene un formato válido.';
-        } else if (err.code === 'auth/weak-password') {
-          errorEl.textContent = 'La contraseña es demasiado débil.';
-        } else {
-          errorEl.textContent = 'Error al crear la cuenta. Inténtalo de nuevo.';
-        }
-      }
-    });
+          errorEl.textContent = 'Este correo ya está registrado.';}
+        else if (err.code === 'auth/invalid-email') {
+          errorEl.textContent = 'El correo no tiene un formato válido.';}
+        else if (err.code === 'auth/weak-password') {
+          errorEl.textContent = 'La contraseña es demasiado débil.';}
+        else {errorEl.textContent = 'Error al crear la cuenta. Inténtalo de nuevo.';}}});
 
     function updateAvatar() {
       const f = document.getElementById('firstName').value.trim();
       const l = document.getElementById('lastName').value.trim();
       const av = document.getElementById('avatar');
-      av.textContent = (f ? f[0].toUpperCase() : '') + (l ? l[0].toUpperCase() : '') || '?';
-    }
+      av.textContent = (f ? f[0].toUpperCase() : '') + (l ? l[0].toUpperCase() : '') || '?';}
 
     function checkStrength(val) {
       const fill = document.getElementById('sfill');
@@ -309,14 +277,12 @@
         { w: '40%', bg: '#ef9f27', text: 'Débil' },
         { w: '65%', bg: '#FAC775', text: 'Regular' },
         { w: '85%', bg: '#97c459', text: 'Fuerte' },
-        { w: '100%', bg: '#1D9E75', text: 'Muy fuerte' },
-      ];
+        { w: '100%', bg: '#1D9E75', text: 'Muy fuerte' },];
       const lv = levels[Math.min(score, 4)];
       fill.style.width = lv.w;
       fill.style.background = lv.bg;
       label.textContent = lv.text;
-      label.style.color = lv.bg;
-    }
+      label.style.color = lv.bg;}
   </script>
 
 </body>
