@@ -5,29 +5,370 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Infotec</title>
     <link rel="stylesheet" href="estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Georgia&display=swap" rel="stylesheet">
+
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_PROYECTO.firebaseapp.com",
+            projectId: "TU_PROJECT_ID",
+            storageBucket: "TU_PROYECTO.appspot.com",
+            messagingSenderId: "TU_SENDER_ID",
+            appId: "TU_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.firestoreAdd = addDoc;
+        window.firestoreCollection = collection;
+        window.firestoreTimestamp = serverTimestamp;
+    </script>
+
+    
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
+
     <h1 class="titulo"><span class="tittex">I N F O T E C</span></h1>
 
     <header class="header">
-        <a f="informacion.html" clasInformacion"></a>
         <a href="Inicio de sesión.html" class="iniciarsesion">Inicio de Sesión</a>
     </header>
 
+    
+    <div class="carrito-btn" onclick="abrirCarrito()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM7.83 13H18c.75 0 1.41-.41 1.75-1.03L21.7 5.5A1 1 0 0 0 20.83 4H5.21l-.94-2H1v2h2l3.6 7.59L4.75 14c-.78 1.04-.22 2.5 1.08 2.5H19v-2H6.27l1.56-1.5z"/>
+        </svg>
+        <span class="carrito-badge" id="carrito-badge">0</span>
+    </div>
+
+    
+    <div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+
+    
+    <div class="carrito-panel" id="carrito-panel">
+        <div class="carrito-panel-header">
+            <h2><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg> Tu Carrito</h2>
+            <button class="cerrar-carrito" onclick="cerrarCarrito()">✕</button>
+        </div>
+        <div class="carrito-items" id="carrito-items">
+            <p class="carrito-vacio">Tu carrito está vacío 🛍️</p>
+        </div>
+        <div class="carrito-footer">
+            <div class="carrito-total">
+                <span>Total:</span>
+                <span id="carrito-total">0,00 €</span>
+            </div>
+            <button class="btn-pagar" id="btn-pagar" onclick="abrirModalPago()" disabled>
+                Comprar ahora
+            </button>
+        </div>
+    </div>
+
+    
     <div class="sidebar">
         <div class="sidebar-header">
             <img src="Img/Infotec.jpeg" alt="Logo">
             <span class="sidebar-title">INFOTEC</span>
         </div>
-        
         <ul>
-            <li><a href="index.html"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-427ZM240-120q-50 0-85-35t-35-85v-240q0-24 9-46t26-39l240-240q17-18 39.5-26.5T480-840q23 0 45 8.5t40 26.5l240 240q17 17 26 39t9 46v240q0 50-35 85t-85 35H240Zm0-80h480q17 0 28.5-11.5T760-240v-240q0-8-3-15t-9-13L595-662l-59 58 144 144v180H280v-180l258-258-30-30q-8-8-15.5-10t-12.5-2q-5 0-12.5 2T452-748L212-508q-6 6-9 13t-3 15v240q0 17 11.5 28.5T240-200Zm120-160h240v-67L480-547 360-427v67Z"/></svg></span>Home</a></li>
-            <li><a href="informacion.html"><span class="emoji">📄</span>Información</a></li>
-            <li><a href="#"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5985E1"><path d="M798-120q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z"/></svg></span>Contacto</a></li>
+            <li><a href="Index.html"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg></span>Home</a></li>
+            <li><a href="informacion.html"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200v-560 179-19 400Zm80-240h221q2-22 10-42t20-38H280v80Zm0 160h157q17-20 39-32.5t46-20.5q-4-6-7-13t-5-14H280v80Zm0-320h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v258q-14-26-34-46t-46-33v-179H200v560h202q-1 6-1.5 12t-.5 12v56H200Zm409-229q-29-29-29-71t29-71q29-29 71-29t71 29q29 29 29 71t-29 71q-29 29-71 29t-71-29ZM480-120v-56q0-24 12.5-44.5T528-250q36-15 74.5-22.5T680-280q39 0 77.5 7.5T832-250q23 9 35.5 29.5T880-176v56H480Z"/></svg></span>Información</a></li>
+            <li><a href="#"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M162-120q-18 0-30-12t-12-30v-162q0-13 9-23.5t23-14.5l138-28q14-2 28.5 2.5T342-374l94 94q38-22 72-48.5t65-57.5q33-32 60.5-66.5T681-524l-97-98q-8-8-11-19t-1-27l26-140q2-13 13-22.5t25-9.5h162q18 0 30 12t12 30q0 125-54.5 247T631-329Q531-229 409-174.5T162-120Zm556-480q17-39 26-79t14-81h-88l-18 94 66 66ZM360-244l-66-66-94 20v88q41-3 81-14t79-28Zm358-356ZM360-244Z"/></svg></span>Contacto</a></li>
+            <li><a href="#" onclick="abrirCarrito()"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg></span>Carrito</a></li>
         </ul>
     </div>
 
-    <img src="Img/Reloj inteligente.png" alt="Reloj" class="reloj">
-    <img src="Img/Banda.png" alt="Banda" class="banda">
+    <section class="seccion-productos">
+        <h2 class="seccion-titulo">Nuestros Productos</h2>
+        <div class="grid-productos" id="grid-productos">
+            
+        </div>
+    </section>
+
+    
+    <div class="notificacion" id="notificacion"></div>
+
+    
+    <div class="modal-overlay" id="modal-pago">
+        <div class="modal-pago">
+            <h3>💳 Finalizar Compra</h3>
+
+            <div class="campo-pago">
+                <label>Nombre completo</label>
+                <input type="text" id="nombre-cliente" placeholder="Juan García">
+            </div>
+            <div class="campo-pago">
+                <label>Email</label>
+                <input type="email" id="email-cliente" placeholder="juan@ejemplo.com">
+            </div>
+            <div class="campo-pago">
+                <label>Dirección de envío</label>
+                <input type="text" id="direccion-cliente" placeholder="Calle Mayor 1, Madrid">
+            </div>
+
+            <div class="campo-pago">
+                <label>Datos de tarjeta</label>
+                <div id="stripe-card-element"></div>
+            </div>
+
+            <div id="pago-error"></div>
+
+            <div class="modal-botones">
+                <button class="btn-cancelar-pago" onclick="cerrarModalPago()">Cancelar</button>
+                <button class="btn-confirmar-pago" id="btn-confirmar" onclick="procesarPago()">Pagar ahora</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const productos = [
+            {
+                id: "reloj-smartwatch-pro",
+                nombre: "Smartwatch Pro X1",
+                descripcion: "Reloj inteligente con pantalla AMOLED, GPS, monitor cardíaco y 7 días de batería.",
+                precio: 149.99,
+                imagen: "Img/Reloj inteligente.png",
+                stock: 10
+            },
+            {
+                id: "banda-fitness-ultra",
+                nombre: "Banda Fitness Ultra",
+                descripcion: "Pulsera de actividad resistente al agua con seguimiento de sueño y notificaciones.",
+                precio: 59.99,
+                imagen: "Img/Banda.png",
+                stock: 15
+            },
+        ];
+
+        const STRIPE_PUBLIC_KEY = "pk_test_51TR0utHcyWf2vFxA8wd7dFwOFtQAlUvMD8CERdC9LgAg8Zn1Tdga3wwdzYZaffVtG8Eq36bqHQHuhXoQ8WvDQYJv00Hldy4Zhe";
+        const stripe = Stripe(STRIPE_PUBLIC_KEY);
+        let elements, cardElement;
+
+        let carrito = [];
+
+        function renderProductos() {
+            const grid = document.getElementById('grid-productos');
+            grid.innerHTML = productos.map(p => `
+                <div class="tarjeta-producto">
+                    <img src="${p.imagen}" alt="${p.nombre}" onerror="this.style.background='rgba(47,74,196,0.3)'; this.style.minHeight='200px'">
+                    <div class="tarjeta-info">
+                        <div class="tarjeta-nombre">${p.nombre}</div>
+                        <div class="tarjeta-descripcion">${p.descripcion}</div>
+                        <div class="tarjeta-footer">
+                            <div>
+                                <div class="tarjeta-precio">${p.precio.toFixed(2).replace('.', ',')} €</div>
+                                <div class="stock-badge">Stock: ${p.stock} unidades</div>
+                            </div>
+                            <button class="btn-anadir" onclick="anadirAlCarrito('${p.id}')">
+                                + Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function anadirAlCarrito(productoId) {
+            const producto = productos.find(p => p.id === productoId);
+            if (!producto) return;
+
+            const existente = carrito.find(item => item.id === productoId);
+            if (existente) {
+                if (existente.cantidad < producto.stock) {
+                    existente.cantidad++;
+                } else {
+                    mostrarNotificacion('⚠️ No hay más stock disponible');
+                    return;
+                }
+            } else {
+                carrito.push({ ...producto, cantidad: 1 });
+            }
+
+            actualizarCarritoUI();
+            mostrarNotificacion(`✅ ${producto.nombre} añadido al carrito`);
+        }
+
+        function cambiarCantidad(productoId, delta) {
+            const item = carrito.find(i => i.id === productoId);
+            if (!item) return;
+
+            item.cantidad += delta;
+            if (item.cantidad <= 0) {
+                carrito = carrito.filter(i => i.id !== productoId);
+            }
+            actualizarCarritoUI();
+        }
+
+        function eliminarDelCarrito(productoId) {
+            carrito = carrito.filter(i => i.id !== productoId);
+            actualizarCarritoUI();
+        }
+
+        function calcularTotal() {
+            return carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+        }
+
+        function actualizarCarritoUI() {
+            const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            const badge = document.getElementById('carrito-badge');
+            const totalEl = document.getElementById('carrito-total');
+            const btnPagar = document.getElementById('btn-pagar');
+            const itemsEl = document.getElementById('carrito-items');
+
+            if (totalItems > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = totalItems;
+            } else {
+                badge.style.display = 'none';
+            }
+
+            totalEl.textContent = calcularTotal().toFixed(2).replace('.', ',') + ' €';
+
+            btnPagar.disabled = carrito.length === 0;
+
+            if (carrito.length === 0) {
+                itemsEl.innerHTML = '<p class="carrito-vacio">Tu carrito está vacío 🛍️</p>';
+                return;
+            }
+
+            itemsEl.innerHTML = carrito.map(item => `
+                <div class="carrito-item">
+                    <img src="${item.imagen}" alt="${item.nombre}" onerror="this.style.background='rgba(47,74,196,0.3)'">
+                    <div class="carrito-item-info">
+                        <div class="carrito-item-nombre">${item.nombre}</div>
+                        <div class="carrito-item-precio">${(item.precio * item.cantidad).toFixed(2).replace('.', ',')} €</div>
+                        <div class="carrito-item-cantidad">
+                            <button class="btn-cantidad" onclick="cambiarCantidad('${item.id}', -1)">−</button>
+                            <span class="cantidad-num">${item.cantidad}</span>
+                            <button class="btn-cantidad" onclick="cambiarCantidad('${item.id}', 1)">+</button>
+                        </div>
+                    </div>
+                    <button class="btn-eliminar" onclick="eliminarDelCarrito('${item.id}')" title="Eliminar">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        function abrirCarrito() {
+            document.getElementById('carrito-panel').classList.add('abierto');
+            document.getElementById('overlay').classList.add('activo');
+        }
+
+        function cerrarCarrito() {
+            document.getElementById('carrito-panel').classList.remove('abierto');
+            document.getElementById('overlay').classList.remove('activo');
+        }
+
+        function abrirModalPago() {
+            cerrarCarrito();
+            document.getElementById('modal-pago').classList.add('activo');
+
+            elements = stripe.elements();
+            cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        color: '#ffffff',
+                        fontFamily: 'Georgia, serif',
+                        fontSize: '15px',
+                        '::placeholder': { color: 'rgba(255,255,255,0.4)' }
+                    },
+                    invalid: { color: '#ff8080' }
+                }
+            });
+            cardElement.mount('#stripe-card-element');
+        }
+
+        function cerrarModalPago() {
+            document.getElementById('modal-pago').classList.remove('activo');
+            document.getElementById('pago-error').textContent = '';
+        }
+
+        async function procesarPago() {
+            const nombre = document.getElementById('nombre-cliente').value.trim();
+            const email = document.getElementById('email-cliente').value.trim();
+            const direccion = document.getElementById('direccion-cliente').value.trim();
+            const errorEl = document.getElementById('pago-error');
+            const btnConfirmar = document.getElementById('btn-confirmar');
+
+            if (!nombre || !email || !direccion) {
+                errorEl.textContent = '⚠️ Por favor, rellena todos los campos.';
+                return;
+            }
+
+            btnConfirmar.disabled = true;
+            btnConfirmar.textContent = 'Procesando...';
+            errorEl.textContent = '';
+
+            try {
+                const { paymentMethod, error } = await stripe.createPaymentMethod({
+                    type: 'card',
+                    card: cardElement,
+                    billing_details: { name: nombre, email: email }
+                });
+
+                if (error) {
+                    errorEl.textContent = '❌ ' + error.message;
+                    btnConfirmar.disabled = false;
+                    btnConfirmar.textContent = 'Pagar ahora';
+                    return;
+                }
+
+                const pedido = {
+                    cliente: { nombre, email, direccion },
+                    productos: carrito.map(i => ({
+                        id: i.id,
+                        nombre: i.nombre,
+                        precio: i.precio,
+                        cantidad: i.cantidad
+                    })),
+                    total: calcularTotal(),
+                    paymentMethodId: paymentMethod.id,
+                    estado: 'pendiente',
+                    fecha: window.firestoreTimestamp ? window.firestoreTimestamp() : new Date().toISOString()
+                };
+
+                if (window.db && window.firestoreAdd && window.firestoreCollection) {
+                    await window.firestoreAdd(
+                        window.firestoreCollection(window.db, 'pedidos'),
+                        pedido
+                    );
+                    console.log('✅ Pedido guardado en Firebase');
+                } else {
+                    console.log('⚠️ Firebase no configurado. Pedido:', pedido);
+                }
+
+                cerrarModalPago();
+                carrito = [];
+                actualizarCarritoUI();
+                mostrarNotificacion('🎉 ¡Pedido realizado con éxito! Gracias, ' + nombre.split(' ')[0]);
+
+            } catch (err) {
+                console.error(err);
+                errorEl.textContent = '❌ Error al procesar el pago. Inténtalo de nuevo.';
+            }
+
+            btnConfirmar.disabled = false;
+            btnConfirmar.textContent = 'Pagar ahora';
+        }
+
+        let notifTimeout;
+        function mostrarNotificacion(mensaje) {
+            const el = document.getElementById('notificacion');
+            clearTimeout(notifTimeout);
+            el.textContent = mensaje;
+            el.classList.add('visible');
+            notifTimeout = setTimeout(() => el.classList.remove('visible'), 2800);
+        }
+
+        renderProductos();
+    </script>
 </body>
 </html>
