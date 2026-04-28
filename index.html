@@ -7,31 +7,6 @@
     <link rel="stylesheet" href="estilos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Georgia&display=swap" rel="stylesheet">
-
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_PROYECTO.firebaseapp.com",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_PROYECTO.appspot.com",
-            messagingSenderId: "TU_SENDER_ID",
-            appId: "TU_APP_ID"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        window.db = db;
-        window.firestoreAdd = addDoc;
-        window.firestoreCollection = collection;
-        window.firestoreTimestamp = serverTimestamp;
-    </script>
-
-    
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -42,7 +17,6 @@
         <a href="Inicio de sesión.html" class="iniciarsesion">Inicio de Sesión</a>
     </header>
 
-    
     <div class="carrito-btn" onclick="abrirCarrito()">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM7.83 13H18c.75 0 1.41-.41 1.75-1.03L21.7 5.5A1 1 0 0 0 20.83 4H5.21l-.94-2H1v2h2l3.6 7.59L4.75 14c-.78 1.04-.22 2.5 1.08 2.5H19v-2H6.27l1.56-1.5z"/>
@@ -50,10 +24,8 @@
         <span class="carrito-badge" id="carrito-badge">0</span>
     </div>
 
-    
     <div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
 
-    
     <div class="carrito-panel" id="carrito-panel">
         <div class="carrito-panel-header">
             <h2><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg> Tu Carrito</h2>
@@ -73,7 +45,6 @@
         </div>
     </div>
 
-    
     <div class="sidebar">
         <div class="sidebar-header">
             <img src="Img/Infotec.jpeg" alt="Logo">
@@ -89,19 +60,14 @@
 
     <section class="seccion-productos">
         <h2 class="seccion-titulo">Nuestros Productos</h2>
-        <div class="grid-productos" id="grid-productos">
-            
-        </div>
+        <div class="grid-productos" id="grid-productos"></div>
     </section>
 
-    
     <div class="notificacion" id="notificacion"></div>
 
-    
     <div class="modal-overlay" id="modal-pago">
         <div class="modal-pago">
             <h3>💳 Finalizar Compra</h3>
-
             <div class="campo-pago">
                 <label>Nombre completo</label>
                 <input type="text" id="nombre-cliente" placeholder="Juan García">
@@ -114,14 +80,11 @@
                 <label>Dirección de envío</label>
                 <input type="text" id="direccion-cliente" placeholder="Calle Mayor 1, Madrid">
             </div>
-
             <div class="campo-pago">
                 <label>Datos de tarjeta</label>
                 <div id="stripe-card-element"></div>
             </div>
-
             <div id="pago-error"></div>
-
             <div class="modal-botones">
                 <button class="btn-cancelar-pago" onclick="cerrarModalPago()">Cancelar</button>
                 <button class="btn-confirmar-pago" id="btn-confirmar" onclick="procesarPago()">Pagar ahora</button>
@@ -129,7 +92,22 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAgbY0cBQbXA04FZ9kw53-KSv9B3uZ_XC8",
+            authDomain: "infotec-16591.firebaseapp.com",
+            projectId: "infotec-16591",
+            storageBucket: "infotec-16591.firebasestorage.app",
+            messagingSenderId: "894458763283",
+            appId: "1:894458763283:web:53258b829526aade62c7e6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         const productos = [
             {
                 id: "reloj-smartwatch-pro",
@@ -152,7 +130,6 @@
         const STRIPE_PUBLIC_KEY = "pk_test_51TR0utHcyWf2vFxA8wd7dFwOFtQAlUvMD8CERdC9LgAg8Zn1Tdga3wwdzYZaffVtG8Eq36bqHQHuhXoQ8WvDQYJv00Hldy4Zhe";
         const stripe = Stripe(STRIPE_PUBLIC_KEY);
         let elements, cardElement;
-
         let carrito = [];
 
         function renderProductos() {
@@ -168,9 +145,7 @@
                                 <div class="tarjeta-precio">${p.precio.toFixed(2).replace('.', ',')} €</div>
                                 <div class="stock-badge">Stock: ${p.stock} unidades</div>
                             </div>
-                            <button class="btn-anadir" onclick="anadirAlCarrito('${p.id}')">
-                                + Añadir
-                            </button>
+                            <button class="btn-anadir" onclick="window.anadirAlCarrito('${p.id}')">+ Añadir</button>
                         </div>
                     </div>
                 </div>
@@ -180,7 +155,6 @@
         function anadirAlCarrito(productoId) {
             const producto = productos.find(p => p.id === productoId);
             if (!producto) return;
-
             const existente = carrito.find(item => item.id === productoId);
             if (existente) {
                 if (existente.cantidad < producto.stock) {
@@ -192,19 +166,15 @@
             } else {
                 carrito.push({ ...producto, cantidad: 1 });
             }
-
             actualizarCarritoUI();
-            mostrarNotificacion(`✅ ${producto.nombre} añadido al carrito`);
+            mostrarNotificacion('✅ ' + producto.nombre + ' añadido al carrito');
         }
 
         function cambiarCantidad(productoId, delta) {
             const item = carrito.find(i => i.id === productoId);
             if (!item) return;
-
             item.cantidad += delta;
-            if (item.cantidad <= 0) {
-                carrito = carrito.filter(i => i.id !== productoId);
-            }
+            if (item.cantidad <= 0) carrito = carrito.filter(i => i.id !== productoId);
             actualizarCarritoUI();
         }
 
@@ -232,7 +202,6 @@
             }
 
             totalEl.textContent = calcularTotal().toFixed(2).replace('.', ',') + ' €';
-
             btnPagar.disabled = carrito.length === 0;
 
             if (carrito.length === 0) {
@@ -247,12 +216,12 @@
                         <div class="carrito-item-nombre">${item.nombre}</div>
                         <div class="carrito-item-precio">${(item.precio * item.cantidad).toFixed(2).replace('.', ',')} €</div>
                         <div class="carrito-item-cantidad">
-                            <button class="btn-cantidad" onclick="cambiarCantidad('${item.id}', -1)">−</button>
+                            <button class="btn-cantidad" onclick="window.cambiarCantidad('${item.id}', -1)">−</button>
                             <span class="cantidad-num">${item.cantidad}</span>
-                            <button class="btn-cantidad" onclick="cambiarCantidad('${item.id}', 1)">+</button>
+                            <button class="btn-cantidad" onclick="window.cambiarCantidad('${item.id}', 1)">+</button>
                         </div>
                     </div>
-                    <button class="btn-eliminar" onclick="eliminarDelCarrito('${item.id}')" title="Eliminar">🗑️</button>
+                    <button class="btn-eliminar" onclick="window.eliminarDelCarrito('${item.id}')" title="Eliminar">🗑️</button>
                 </div>
             `).join('');
         }
@@ -270,7 +239,6 @@
         function abrirModalPago() {
             cerrarCarrito();
             document.getElementById('modal-pago').classList.add('activo');
-
             elements = stripe.elements();
             cardElement = elements.create('card', {
                 style: {
@@ -332,18 +300,11 @@
                     total: calcularTotal(),
                     paymentMethodId: paymentMethod.id,
                     estado: 'pendiente',
-                    fecha: window.firestoreTimestamp ? window.firestoreTimestamp() : new Date().toISOString()
+                    fecha: serverTimestamp()
                 };
 
-                if (window.db && window.firestoreAdd && window.firestoreCollection) {
-                    await window.firestoreAdd(
-                        window.firestoreCollection(window.db, 'pedidos'),
-                        pedido
-                    );
-                    console.log('✅ Pedido guardado en Firebase');
-                } else {
-                    console.log('⚠️ Firebase no configurado. Pedido:', pedido);
-                }
+                await addDoc(collection(db, 'pedidos'), pedido);
+                console.log('Pedido guardado en Firebase');
 
                 cerrarModalPago();
                 carrito = [];
@@ -367,6 +328,15 @@
             el.classList.add('visible');
             notifTimeout = setTimeout(() => el.classList.remove('visible'), 2800);
         }
+
+        window.anadirAlCarrito = anadirAlCarrito;
+        window.cambiarCantidad = cambiarCantidad;
+        window.eliminarDelCarrito = eliminarDelCarrito;
+        window.abrirCarrito = abrirCarrito;
+        window.cerrarCarrito = cerrarCarrito;
+        window.abrirModalPago = abrirModalPago;
+        window.cerrarModalPago = cerrarModalPago;
+        window.procesarPago = procesarPago;
 
         renderProductos();
     </script>
