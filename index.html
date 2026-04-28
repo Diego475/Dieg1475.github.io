@@ -138,19 +138,18 @@
                 <div class="tarjeta-producto">
                     <img src="${p.imagen}" alt="${p.nombre}" onerror="this.style.background='rgba(47,74,196,0.3)'; this.style.minHeight='200px'">
                     <div class="tarjeta-info">
-                        <div class="tarjeta-nombre">${p.nombre}</div>
-                        <div class="tarjeta-descripcion">${p.descripcion}</div>
-                        <div class="tarjeta-footer">
-                            <div>
-                                <div class="tarjeta-precio">${p.precio.toFixed(2).replace('.', ',')} €</div>
-                                <div class="stock-badge">Stock: ${p.stock} unidades</div>
+                    <div class="tarjeta-nombre">${p.nombre}</div>
+                    <div class="tarjeta-descripcion">${p.descripcion}</div>
+                    <div class="tarjeta-footer">
+                        <div>
+                            <div class="tarjeta-precio">${p.precio.toFixed(2).replace('.', ',')} €</div>
+                            <div class="stock-badge">Stock: ${p.stock} unidades</div>
                             </div>
                             <button class="btn-anadir" onclick="window.anadirAlCarrito('${p.id}')">+ Añadir</button>
                         </div>
                     </div>
                 </div>
-            `).join('');
-        }
+            `).join('');}
 
         function anadirAlCarrito(productoId) {
             const producto = productos.find(p => p.id === productoId);
@@ -216,25 +215,22 @@
                         <div class="carrito-item-nombre">${item.nombre}</div>
                         <div class="carrito-item-precio">${(item.precio * item.cantidad).toFixed(2).replace('.', ',')} €</div>
                         <div class="carrito-item-cantidad">
-                            <button class="btn-cantidad" onclick="window.cambiarCantidad('${item.id}', -1)">−</button>
-                            <span class="cantidad-num">${item.cantidad}</span>
-                            <button class="btn-cantidad" onclick="window.cambiarCantidad('${item.id}', 1)">+</button>
+                        <button class="btn-cantidad" onclick="window.cambiarCantidad('${item.id}', -1)">−</button>
+                        <span class="cantidad-num">${item.cantidad}</span>
+                        <button class="btn-cantidad" onclick="window.cambiarCantidad('${item.id}', 1)">+</button>
                         </div>
                     </div>
                     <button class="btn-eliminar" onclick="window.eliminarDelCarrito('${item.id}')" title="Eliminar">🗑️</button>
                 </div>
-            `).join('');
-        }
+            `).join('');}
 
         function abrirCarrito() {
             document.getElementById('carrito-panel').classList.add('abierto');
-            document.getElementById('overlay').classList.add('activo');
-        }
+            document.getElementById('overlay').classList.add('activo');}
 
         function cerrarCarrito() {
             document.getElementById('carrito-panel').classList.remove('abierto');
-            document.getElementById('overlay').classList.remove('activo');
-        }
+            document.getElementById('overlay').classList.remove('activo');}
 
         function abrirModalPago() {
             cerrarCarrito();
@@ -248,16 +244,12 @@
                         fontSize: '15px',
                         '::placeholder': { color: 'rgba(255,255,255,0.4)' }
                     },
-                    invalid: { color: '#ff8080' }
-                }
-            });
-            cardElement.mount('#stripe-card-element');
-        }
+                    invalid: { color: '#ff8080' }}});
+            cardElement.mount('#stripe-card-element');}
 
         function cerrarModalPago() {
             document.getElementById('modal-pago').classList.remove('activo');
-            document.getElementById('pago-error').textContent = '';
-        }
+            document.getElementById('pago-error').textContent = '';}
 
         async function procesarPago() {
             const nombre = document.getElementById('nombre-cliente').value.trim();
@@ -268,8 +260,7 @@
 
             if (!nombre || !email || !direccion) {
                 errorEl.textContent = ' <svg xmlns="Por favor, rellena todos los campos.';
-                return;
-            }
+                return;}
 
             btnConfirmar.disabled = true;
             btnConfirmar.textContent = 'Procesando...';
@@ -279,15 +270,13 @@
                 const { paymentMethod, error } = await stripe.createPaymentMethod({
                     type: 'card',
                     card: cardElement,
-                    billing_details: { name: nombre, email: email }
-                });
+                    billing_details: { name: nombre, email: email }});
 
                 if (error) {
                     errorEl.textContent = '❌ ' + error.message;
                     btnConfirmar.disabled = false;
                     btnConfirmar.textContent = 'Pagar ahora';
-                    return;
-                }
+                    return;}
 
                 const pedido = {
                     cliente: { nombre, email, direccion },
@@ -295,13 +284,11 @@
                         id: i.id,
                         nombre: i.nombre,
                         precio: i.precio,
-                        cantidad: i.cantidad
-                    })),
+                        cantidad: i.cantidad})),
                     total: calcularTotal(),
                     paymentMethodId: paymentMethod.id,
                     estado: 'pendiente',
-                    fecha: serverTimestamp()
-                };
+                    fecha: serverTimestamp()};
 
                 await addDoc(collection(db, 'pedidos'), pedido);
                 console.log('Pedido guardado en Firebase');
@@ -309,12 +296,10 @@
                 cerrarModalPago();
                 carrito = [];
                 actualizarCarritoUI();
-                mostrarNotificacion('🎉 ¡Pedido realizado con éxito! Gracias, ' + nombre.split(' ')[0]);
-
-            } catch (err) {
+                mostrarNotificacion('🎉 ¡Pedido realizado con éxito! Gracias, ' + nombre.split(' ')[0]);}
+                catch (err) {
                 console.error(err);
-                errorEl.textContent = '❌ Error al procesar el pago. Inténtalo de nuevo.';
-            }
+                errorEl.textContent = '❌ Error al procesar el pago. Inténtalo de nuevo.';}
 
             btnConfirmar.disabled = false;
             btnConfirmar.textContent = 'Pagar ahora';}
