@@ -317,8 +317,7 @@
             }
 
             btnConfirmar.disabled = false;
-            btnConfirmar.textContent = 'Pagar ahora';
-        }
+            btnConfirmar.textContent = 'Pagar ahora';}
 
         let notifTimeout;
         function mostrarNotificacion(mensaje) {
@@ -326,8 +325,7 @@
             clearTimeout(notifTimeout);
             el.textContent = mensaje;
             el.classList.add('visible');
-            notifTimeout = setTimeout(() => el.classList.remove('visible'), 2800);
-        }
+            notifTimeout = setTimeout(() => el.classList.remove('visible'), 2800);}
 
         window.anadirAlCarrito = anadirAlCarrito;
         window.cambiarCantidad = cambiarCantidad;
