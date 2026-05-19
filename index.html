@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="estilos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Georgia&display=swap" rel="stylesheet">
-    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://js.stripe.com/v3/"></script>   
 </head>
 <body>
 
@@ -16,7 +16,7 @@
     <header class="header">
         <a href="Inicio de sesión.html" class="iniciarsesion">Inicio de Sesión</a>
     </header>
-
+            <!--Botones para abrir y cerrar el carrito-->
     <div class="carrito-btn" onclick="abrirCarrito()">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM7.83 13H18c.75 0 1.41-.41 1.75-1.03L21.7 5.5A1 1 0 0 0 20.83 4H5.21l-.94-2H1v2h2l3.6 7.59L4.75 14c-.78 1.04-.22 2.5 1.08 2.5H19v-2H6.27l1.56-1.5z"/>
@@ -31,6 +31,7 @@
             <h2><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg> Tu Carrito</h2>
             <button class="cerrar-carrito" onclick="cerrarCarrito()">✕</button>
         </div>
+        <!-- En este apartado esta ya lo que se añade al carrito y el comando para que funcione-->
         <div class="carrito-items" id="carrito-items">
             <p class="carrito-vacio">Tu carrito está vacío <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M360-640v-80h240v80H360ZM223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z"/></svg></p>
         </div>
@@ -44,20 +45,20 @@
             </button>
         </div>
     </div>
-
+            <!--Esto ya es la barra lateral de la izquierda y su configuración-->
     <div class="sidebar">
         <div class="sidebar-header">
             <img src="Img/Infotec.jpeg" alt="Logo">
             <span class="sidebar-title">INFOTEC</span>
         </div>
         <ul>
-            <li><a href="index.html"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg></span>Home</a></li>
+            <li><a href="Index.html"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg></span>Home</a></li>
             <li><a href="informacion.html"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-200v-560 179-19 400Zm80-240h221q2-22 10-42t20-38H280v80Zm0 160h157q17-20 39-32.5t46-20.5q-4-6-7-13t-5-14H280v80Zm0-320h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v258q-14-26-34-46t-46-33v-179H200v560h202q-1 6-1.5 12t-.5 12v56H200Zm409-229q-29-29-29-71t29-71q29-29 71-29t71 29q29 29 29 71t-29 71q-29 29-71 29t-71-29ZM480-120v-56q0-24 12.5-44.5T528-250q36-15 74.5-22.5T680-280q39 0 77.5 7.5T832-250q23 9 35.5 29.5T880-176v56H480Z"/></svg></span>Información</a></li>
-            <li><a href="#"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M162-120q-18 0-30-12t-12-30v-162q0-13 9-23.5t23-14.5l138-28q14-2 28.5 2.5T342-374l94 94q38-22 72-48.5t65-57.5q33-32 60.5-66.5T681-524l-97-98q-8-8-11-19t-1-27l26-140q2-13 13-22.5t25-9.5h162q18 0 30 12t12 30q0 125-54.5 247T631-329Q531-229 409-174.5T162-120Zm556-480q17-39 26-79t14-81h-88l-18 94 66 66ZM360-244l-66-66-94 20v88q41-3 81-14t79-28Zm358-356ZM360-244Z"/></svg></span>Contacto</a></li>
+            <li><a href="Foro.html"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M162-120q-18 0-30-12t-12-30v-162q0-13 9-23.5t23-14.5l138-28q14-2 28.5 2.5T342-374l94 94q38-22 72-48.5t65-57.5q33-32 60.5-66.5T681-524l-97-98q-8-8-11-19t-1-27l26-140q2-13 13-22.5t25-9.5h162q18 0 30 12t12 30q0 125-54.5 247T631-329Q531-229 409-174.5T162-120Zm556-480q17-39 26-79t14-81h-88l-18 94 66 66ZM360-244l-66-66-94 20v88q41-3 81-14t79-28Zm358-356ZM360-244Z"/></svg></span>Foro</a></li>
             <li><a href="#" onclick="abrirCarrito()"><span class="emoji"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg></span>Carrito</a></li>
         </ul>
     </div>
-
+                <!-- Y aquí está los productos para hacer click y comprar y rellenar los datos de la compra-->
     <section class="seccion-productos">
         <h2 class="seccion-titulo">Nuestros Productos</h2>
         <div class="grid-productos" id="grid-productos"></div>
@@ -91,10 +92,9 @@
             </div>
         </div>
     </div>
-
+                <!-- Todo esto es el pie de página -->
     <footer>
         <div class="footer-grid">
-
             <div class="footer-col">
                 <h4>Contacto</h4>
                 <p>📧 infotecdevelope@gmail.com</p>
@@ -102,7 +102,6 @@
                 <p>📞 +34 955 369 256</p>
                 <p>📍 C,La Mina,42 , Sevilla</p>
             </div>
-
             <div class="footer-col">
                 <h4>Redes sociales</h4>
                 <div class="footer-redes">
@@ -145,14 +144,14 @@
                 <p>© 2025 Infotec. Todos los derechos reservados.</p>
                 <p style="margin-top: 10px; font-size: 13px; color: #555;">Diseñado y desarrollado por el equipo Infotec.</p>
             </div>
-
         </div>
-
         <div class="footer-bottom">
             © 2025 Infotec · Todos los derechos reservados
         </div>
     </footer>
+                <!-- Hasta aquí es el píe de página -->
 
+                
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -169,7 +168,10 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const productos = [
+                /*Hasta aquí es lo de la base de datos*/
+
+                /* Este es el codigo que añade los productos para comprarlos*/
+                const productos = [
             {
                 id: "reloj-smartwatch-pro",
                 nombre: "Smartwatch Pro X1",
@@ -186,8 +188,17 @@
                 imagen: "Img/Banda.png",
                 stock: 15
             },
-        ];
-
+            {
+                id: "peto-deportivo",
+                nombre: "Peto Deportivo Pro",
+                descripcion: "Peto deportivo de alta resistencia, ligero y transpirable, ideal para cualquier actividad física.",
+                precio: 79.99,
+                imagen: "Img/Peto Pectoral.png",
+                stock: 12
+            },
+            ];          
+                /*hasta aqui*/
+                    /* Y este es el código que te da la pagina stripe para proceder al pago*/
         const STRIPE_PUBLIC_KEY = "pk_test_51TR0utHcyWf2vFxA8wd7dFwOFtQAlUvMD8CERdC9LgAg8Zn1Tdga3wwdzYZaffVtG8Eq36bqHQHuhXoQ8WvDQYJv00Hldy4Zhe";
         const stripe = Stripe(STRIPE_PUBLIC_KEY);
         let elements, cardElement;
@@ -212,6 +223,7 @@
                 </div>
             `).join('');}
 
+            /*Codigo para añadir al carrito y informa de que haya stock*/
         function anadirAlCarrito(productoId) {
             const producto = productos.find(p => p.id === productoId);
             if (!producto) return;
@@ -246,7 +258,7 @@
         function calcularTotal() {
             return carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
         }
-
+            /*Función para hacer el calculo total y hacer la suma de lo que se añade al carrito*/
         function actualizarCarritoUI() {
             const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
             const badge = document.getElementById('carrito-badge');
