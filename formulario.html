@@ -247,7 +247,7 @@
           fechaRegistro: new Date().toISOString()});
 
         okEl.textContent = '¡Cuenta creada correctamente! Redirigiendo...';
-        setTimeout(() => { window.location.href = 'inicio de sesion.html'; }, 1500);}
+        setTimeout(() => { window.location.href = 'Inicio de sesión.html'; }, 1500);}
         catch (err) {
         if (err.code === 'auth/email-already-in-use') {
           errorEl.textContent = 'Este correo ya está registrado.';}
